@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Kryptonite": {
+            "applicationId": "1znInkUwxEU1tSd7Ee7SX9WL9c3whQXh4esOLREB", 
+            "masterKey": "4pbusQEsAtixTjDSiezZWyKtrobYg4HIVKC0go6q"
+        }, 
+        "_default": {
+            "link": "Kryptonite"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.8"
+    }
+}
