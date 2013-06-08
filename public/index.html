@@ -7,12 +7,19 @@
       <h1>Kryptonite</h1>
       <h3>Broadcast an incident</h3>
     <div id="main">
-      <label for="description">Description</label>
-      <input type="text" name="description" />
-      <label for="date">Date</label> and <label for="hour">hour</label>
-      <input type="date" name="date" />
-      <input type="number" name="hour" min="0" max="23" step="1" />
-  </div>
+      <div id="broadcast">
+        <label for="description">Description</label>
+        <input type="text" name="description" />
+        <label for="date">Date</label> and <label for="hour">hour</label>
+        <input type="date" name="date" />
+        <input type="number" name="hour" min="0" max="23" step="1" />
+        <div id="map">
+          <!-- Longitude and latitude come from here. -->
+        </div>
+      <div id="receive">
+        <pre>locations.each do |location| blah_blah end</pre>
+      </div>
+    </div>
     <footer>
     </footer>
   </body>
