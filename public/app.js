@@ -153,10 +153,6 @@
 
   var send = function (e) {
     e.preventDefault()
-
-    // Save it to parse
-    var incident = new Incident
-    incident.save(window.data)
 	
 	var send_to_installation_ids = hits.map ( function ( hit ) {
 		return hit.installation_id
@@ -165,6 +161,10 @@
 		console.log ( "No targets for push notifications")
 		return;
 	}
+	window.data.installationIds = send_to_installation_ids
+	// Save it to parse
+    var incident = new Incident
+    incident.save(window.data)
 	
 	//var alert_message = window.data.description + "\nCall : " + window.data.phoneNumber + "\nID : " + window.data.incidentNumber
 	console.log("Sending " + window.data.description);
