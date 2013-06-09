@@ -19,18 +19,34 @@
    
     google.maps.event.addListener(map, 'click', function( mouse_event /* google.maps.MouseEvent */ ) {
       if ( incident_marker ) {
-        incident_marker.setMap(null)
-      }
+	incident_marker.position = mouse_event.latLng
+	incident_marker.circle.center = mouse_event.latLng
+        //incident_marker.setMap(null)
+      } else {
       incident_marker = new google.maps.Marker({
         position: mouse_event.latLng,
         map: map
       });
-      var circle = new google.maps.Circle({
+	  
+	  var radius_in_miles = $('input[name=radius]').val()
+	
+      incident_marker.circle = new google.maps.Circle({
+	      strokeColor: '#FF0000',
+	      strokeOpacity: 0.8,
+	      strokeWeight: 2,
+	      fillColor: '#FF0000',
+	      fillOpacity: 0.35,
         map: map,
-        radius: 0.000621371 * $('input[name=radius]').val(),
+        center: incident_marker.position,
+        radius: radius_in_miles * 1609.34, //* $('input[name=radius]').val(),  radius in miles * 1609.34 )
         fillColor: '#000000'
       });
-      circle.bindTo('center', incident_marker, 'position')
+
+	}
+
+
+
+      //circle.bindTo('center', incident_marker, 'position')
       
       $("input[name=latitude]").val(mouse_event.latLng.lat())
       $("input[name=longitude]").val(mouse_event.latLng.lng())
@@ -86,11 +102,6 @@
     }, {})
 
     // Validate
-    for (field in {"description":null,"phoneNumber":null,"incidentNumber":null}) {
-      if (!data[field]) {
-        alert('You need to provide a ' + field + '.')
-      }
-    }
     if (!data.longitude) {
       alert('Click on the map to select a location.')
     }
@@ -206,4 +217,15 @@
 
   $('label[for=radius] .radius').text($('input[name=radius]').val())
   $('input[name=radius]').change(function() { $('label[for=radius] .radius').text($(this).val())})
+ 
+ 
+ $('input[name=alertCheck]').change(function() {
+                                    //Immediate Alert - hide fields
+                                    if ($('input[name=alertCheck]').is(':checked')){
+                                    $('.requestrow').attr("style", "display:none");
+                                    } else { //Information Request - show fields
+                                    $('.requestrow').attr("style", "display:block");
+                                    }
+                                    });
+ 
 })()
