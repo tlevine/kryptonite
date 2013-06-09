@@ -181,7 +181,8 @@
 		}
 	}, 	{
 		  success: function() {
-		    console.log ( "Push successful")
+		    $('#map-canvas').remove()
+            $('#main').append('<strong id="foo">Incident alert has been broadcast.</strong>')
 		  },
 	      error: function(error) {
 			  console.log ( "Push unsuccessful " + error)
