@@ -24,8 +24,8 @@
         map: map,
       });
       
-      $("#lat").text(mouse_event.latLng.lat())
-      $("#long").text(mouse_event.latLng.lng())
+      $("input[name=latitude]").val(mouse_event.latLng.lat())
+      $("input[name=longitude]").val(mouse_event.latLng.lng())
       
     });
   }
@@ -44,7 +44,7 @@
     delete data.hour
   
     // Look up nearby readings in location
-    var incidentLocation = new Parse.GeoPoint(37.822802, -122.373962)
+    var incidentLocation = new Parse.GeoPoint($("input[name=latitude]").val(), $("input[name=longitude]").val())
     var query = new Parse.Query(Location)
   
     // and in time
