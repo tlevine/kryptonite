@@ -174,10 +174,10 @@
 	Parse.Push.send( {
 		where: target_devices_query,
 		data : {
-			alert : window.data.description
-			//sound: "default"
-			//reference_id:  window.data.incidentNumber,
-			//phone_number: window.data.phoneNumber
+			alert : window.data.description,
+			sound: "default",
+			reference_id: window.data.incidentNumber,
+			phone_number: window.data.phoneNumber
 		}
 	}, 	{
 		  success: function() {
