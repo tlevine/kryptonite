@@ -1,6 +1,9 @@
 Kryptonite
 =====
 
+**Alex**: {{contextual alert safety paragraph}}
+
+**Tom**: There was another interesting thing about the Boston shooting incident.
 Through major advances in technology (blah blah),
 we now live in a world where ordinary people are
 constantly producing digital records of the world
@@ -13,6 +16,7 @@ marathon investigation.
 http://www.wired.com/dangerroom/2013/04/boston-crowdsourced/
 http://www.computerworld.com/s/article/9238446/Boston_bombings_Forensics_on_crowdsourced_video_will_be_a_challenge
 
+**Tom**:
 While they recognize the value of crowdsourced data,
 the investigators did not have a good tool for
 collecting the data; they simply published a press
@@ -37,6 +41,7 @@ the scene of the violent crime. Citizens are empowered to assist with the
 investigation by calling a phone number, talking to an
 investigator and providing any relevant information they have.
 
+**Tom**:
 You can think of Kryptonite as a targeted press release.
 When law-enforcement needs to keep civilians away from a
 dangerous area, it can alert the specific people who are
@@ -48,3 +53,10 @@ Kryptonite facilitates communication between law-enforcement
 officials and civilians. It helps civilians stay clear of
 dangerous situations, and it helps law-enforcement officials
 innovate their investigation of violent crime.
+
+
+Future functionality
+* Sending images
+* Mining Google Latitude for past locations
+* Integrating with existing crime alert systems to make it easier
+    for law-enforcement organizations to adopt Kryptonite
