@@ -6,11 +6,19 @@ window.onload = function() {
       input[output.name] = output.value
       return input
     }, {})
-    data.date = new Date(data.date)
-    window.data = data
 
+    // Make the date a date.
+    data.date = new Date(data.date)
+    data.date.setHours(data.date.getHours() + (1 * data.hour))
+    delete data.hour
+
+    // Save it to parse
     var incident = new Parse.Object('Incident')
     incident.save(data)
+
+    // For debugging
+    window.data = data
+
     return false
   })
 }
