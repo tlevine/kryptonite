@@ -113,9 +113,9 @@
 
     // Save it to parse
     var incident = new Incident
-    incident.save(data)
+    incident.save(window.data)
 
-	var alert_message = data.description
+	var alert_message = window.data.description
 	console.log("Sending " + alert_message);
 	Parse.Push.send( {
 		where: last_query,
