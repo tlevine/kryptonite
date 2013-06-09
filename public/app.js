@@ -102,11 +102,6 @@
     }, {})
 
     // Validate
-    for (field in {"description":null,"phoneNumber":null,"incidentNumber":null}) {
-      if (!data[field]) {
-        alert('You need to provide a ' + field + '.')
-      }
-    }
     if (!data.longitude) {
       alert('Click on the map to select a location.')
     }
