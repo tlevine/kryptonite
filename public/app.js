@@ -33,10 +33,25 @@
   // On clicking the "submit" button
   var broadcast = function(e) {
     e.preventDefault()
+    // Get form data.
     var data = Parse._.reduce($('#broadcast').serializeArray(), function(input, output) {
       input[output.name] = output.value
       return input
     }, {})
+
+    // Validate
+    if (!data.description) {
+      alert('You need to provide a description.')
+      return false
+    }
+    if (!data.longitude) {
+      alert('Click on the map to select a location.')
+      return false
+    }
+    if (data.hour === '') {
+      alert('What hour of the day?')
+      return false
+    }
   
     // Make the date a date.
     data.date = new Date(data.date)
