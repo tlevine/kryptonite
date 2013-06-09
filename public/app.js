@@ -6,7 +6,17 @@
 
   // Make the map
   var map
+  
+  var incident_center_changed = function () {
+	  $("input[name=latitude]").val(incident_marker.center.lat())
+      $("input[name=longitude]").val(incident_marker.center.lng())
 
+      search()
+}
+  var incident_radius_changed = function () {
+	$('input[name=radius]').val(incident_marker.radius/1609.34)
+	search()
+	}
   var initializeMap = function() {
     var mapOptions = {
       zoom: 14,
@@ -19,18 +29,16 @@
    
     google.maps.event.addListener(map, 'click', function( mouse_event /* google.maps.MouseEvent */ ) {
     if ( incident_marker ) {
-	  incident_marker.setPosition ( mouse_event.latLng )
-	  incident_marker.circle.setCenter ( mouse_event.latLng )
-        //incident_marker.setMap(null)
+	  incident_marker.setCenter ( mouse_event.latLng )
     } else {
-      incident_marker = new google.maps.Marker({
-        position: mouse_event.latLng,
-        map: map
-      });
+      // incident_marker = new google.maps.Marker({
+      //         position: mouse_event.latLng,
+      //         map: map
+      //       });
 	  
 	  var radius_in_miles = $('input[name=radius]').val()
 	
-      incident_marker.circle = new google.maps.Circle({
+      incident_marker = new google.maps.Circle({
 	      strokeColor: '#FF0000',
 	      strokeOpacity: 0.8,
 	      strokeWeight: 2,
@@ -39,19 +47,19 @@
 	editable: true,
 	clickable : false,
         map: map,
-        center: incident_marker.position,
+        center: mouse_event.latLng,
         radius: radius_in_miles * 1609.34, //* $('input[name=radius]').val(),  radius in miles * 1609.34 )
         fillColor: '#000000'
       });
-	}
 
-
-
+      google.maps.event.addListener(incident_marker, 'center_changed', incident_center_changed);
+		google.maps.event.addListener(incident_marker, 'radius_changed', incident_radius_changed);
       //circle.bindTo('center', incident_marker, 'position')
       
       $("input[name=latitude]").val(mouse_event.latLng.lat())
       $("input[name=longitude]").val(mouse_event.latLng.lng())
       search()
+	}
     });
   }
 
@@ -72,7 +80,7 @@ var update_displayed_radius = function () {
 		return
 	}
 
-	var current_marker_point_parse = new Parse.GeoPoint(incident_marker.getPosition().lat(), incident_marker.getPosition().lng());
+	var current_marker_point_parse = new Parse.GeoPoint(incident_marker.center.lat(), incident_marker.center.lng());
 
 
 	var unique_locations = new Object();
@@ -114,6 +122,13 @@ var update_displayed_radius = function () {
     if (!data.longitude) {
       alert('Click on the map to select a location.')
     }
+
+	if ($('input[name=alertCheck]').is(':checked')) {
+		//Overload date
+		data.date = new Date()
+		//data.date.setHours(24)
+	} else {
+
     if (data.hour === '') {
       alert('What hour of the day?')
     }
@@ -125,7 +140,7 @@ var update_displayed_radius = function () {
     console.log(data.date)
     data.date.setHours(data.date.getHours() + (1 * data.hour))
     console.log(data.date)
-
+}
     // Make the location a GeoPoint
     data.location = new Parse.GeoPoint(1*data.latitude,1*data.longitude)
     
@@ -137,17 +152,18 @@ var update_displayed_radius = function () {
   // Search
   var search = function() {
     load_data ()
-
+	
     // Look up nearby readings in location
     last_query = new Parse.Query(Location)
   
-    // and in time
+	// and in time
     var startDate = new Date()
     var endDate = new Date()
+
     startDate.setTime(window.data.date.getTime())
     endDate.setTime(window.data.date.getTime())
-    startDate.setHours(startDate.getHours() - 6)
-    endDate.setHours(endDate.getHours() + 6)
+    startDate.setHours(startDate.getHours() - 1)
+    endDate.setHours(endDate.getHours() + 1)
     hits.forEach ( function ( hit ) {
       if (hit) {
         hit.setMap ( null )
@@ -232,10 +248,13 @@ var update_displayed_radius = function () {
                                     //Immediate Alert - hide fields
                                     if ($('input[name=alertCheck]').is(':checked')){
                                     $('.requestrow').attr("style", "display:none");
+										search()
                                     } else { //Information Request - show fields
                                     $('.requestrow').attr("style", "display:block");
+										search()
                                     }
                                     });
   
  $('input[name=radius]').change(update_displayed_radius)
+
 })()
