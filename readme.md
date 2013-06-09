@@ -26,6 +26,7 @@ http://www.bloomberg.com/news/2013-04-19/boston-s-surreal-crowdsourced-manhunt.h
 http://petapixel.com/2013/04/17/boston-marathon-bombing-investigators-using-crowdsourced-photographs/
 http://news.cnet.com/8301-13578_3-57579707-38/crowdsourced-videos-photos-could-aid-boston-blast-investigations/
 
+**Sam (demo)**:
 We thought we could do better, so we created Kryptonite,
 a violent crime alert and witness reporting system. To a civilian,
 Kryptonite is a context-sensitive alert app that
@@ -35,6 +36,7 @@ the civilian receives an alert from the police in real time.
 Civilians install the app so they can stay safe.
 But that's not all.
 
+**Sam (demo)**:
 After the situation has cooled down, law enforcement can
 send a request for information to the people who were near
 the scene of the violent crime. Citizens are empowered to assist with the
@@ -49,12 +51,13 @@ at risk. And when they need evidence for an investigation,
 they can alert the specific people who are likely to have
 the evidence.
 
+**Alex**:
 Kryptonite facilitates communication between law-enforcement
 officials and civilians. It helps civilians stay clear of
 dangerous situations, and it helps law-enforcement officials
 innovate their investigation of violent crime.
 
-
+**Sam**:
 Future functionality
 * Sending images
 * Mining Google Latitude for past locations
