@@ -18,11 +18,36 @@
             <input placeholder="Robbery on the street with a gun" type="text" name="description" />
         </div>
         <div class="row">
-          <label for="date">Date</label> and <label for="hour">hour</label>
+          <label for="date">Date</label> and <label for="hour">time</label>
         </div>
         <div class="row">
           <input type="date" name="date" />
-          <input type="number" name="hour" min="0" max="23" step="1" />
+          <select name="hour">
+              <option value="0">12:00 am</option>
+              <option value="1">01:00 am</option>
+              <option value="2">02:00 am</option>
+              <option value="3">03:00 am</option>
+              <option value="4">04:00 am</option>
+              <option value="5">05:00 am</option>
+              <option value="6">06:00 am</option>
+              <option value="7">07:00 am</option>
+              <option value="8">08:00 am</option>
+              <option value="9">09:00 am</option>
+              <option value="10">10:00 am</option>
+              <option value="11">11:00 am</option>
+              <option value="12">12:00 pm</option>
+              <option value="13">01:00 pm</option>
+              <option value="14">02:00 pm</option>
+              <option value="15">03:00 pm</option>
+              <option value="16">04:00 pm</option>
+              <option value="17">05:00 pm</option>
+              <option value="18">06:00 pm</option>
+              <option value="19">07:00 pm</option>
+              <option value="20">08:00 pm</option>
+              <option value="21">09:00 pm</option>
+              <option value="22">10:00 pm</option>
+              <option value="23">11:00 pm</option>
+          </select>
           <input type="submit" name="submit" value="Broadcast" />
         </div>
         <input type="hidden" name="longitude" />
