@@ -3,6 +3,33 @@
   var Incident = Parse.Object.extend('Incident')
   var Location = Parse.Object.extend('Location')
 
+  // Make the map
+  var initializeMap = function() {
+    var mapOptions = {
+      zoom: 20,
+      center: new google.maps.LatLng(37.750254,-122.406951),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+    var incident_marker = null
+    
+    google.maps.event.addListener(map, 'click', function( mouse_event /* google.maps.MouseEvent */ ) {
+      if ( incident_marker ) {
+        incident_marker.setMap(null)
+      }
+       incident_marker = new google.maps.Marker({
+        position: mouse_event.latLng,
+        map: map,
+      });
+      
+      $("#lat").text(mouse_event.latLng.lat())
+      $("#long").text(mouse_event.latLng.lng())
+      
+    });
+  }
+
   // On clicking the "submit" button
   var broadcast = function(e) {
     e.preventDefault()
@@ -48,6 +75,9 @@
     return false
   }
 
+
+  // Main function
+  google.maps.event.addDomListener(window, 'load', initializeMap)
   window.onload = function() { 
     // Set defaults.
     var d = new Date()

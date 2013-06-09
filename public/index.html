@@ -1,38 +1,6 @@
 <html>
   <head>
     <title>Kryptonite</title>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-        <script>
-        
-    function initialize() {
-      var mapOptions = {
-        zoom: 20,
-        center: new google.maps.LatLng(37.750254,-122.406951),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-
-      var map = new google.maps.Map(document.getElementById('map-canvas'),
-          mapOptions);
-      var incident_marker = null
-      
-      google.maps.event.addListener(map, 'click', function( mouse_event /* google.maps.MouseEvent */ ) {
-        if ( incident_marker ) {
-          incident_marker.setMap(null)
-        }
-         incident_marker = new google.maps.Marker({
-          position: mouse_event.latLng,
-          map: map,
-        });
-        
-        $("#lat").text(mouse_event.latLng.lat())
-        $("#long").text(mouse_event.latLng.lng())
-        
-      });
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
   </head>
   <body>
     <header>
@@ -63,5 +31,6 @@
   </body>
   <script src="http://www.parsecdn.com/js/parse-1.2.8.min.js"></script>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
   <script src="app.js"></script>
 </html>
