@@ -1,21 +1,31 @@
 <html>
   <head>
     <title>Kryptonite</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
   <body>
     <header>
       <h1>Kryptonite</h1>
       <h3>Broadcast an incident</h3>
+    </header>
     <div id="main">
       <form id="broadcast">
-        <label for="description">Description</label>
-        <input type="text" name="description" />
-        <label for="date">Date</label> and <label for="hour">hour</label>
-        <input type="date" name="date" />
-        <input type="number" name="hour" min="0" max="23" step="1" />
+        <div class="row">
+          <label for="description">Description</label>
+        </div>
+        <div class="row">
+            <input placeholder="Robbery on the street with a gun" type="text" name="description" />
+        </div>
+        <div class="row">
+          <label for="date">Date</label> and <label for="hour">hour</label>
+        </div>
+        <div class="row">
+          <input type="date" name="date" />
+          <input type="number" name="hour" min="0" max="23" step="1" />
+          <input type="submit" name="submit" value="Broadcast" />
+        </div>
         <input type="hidden" name="longitude" />
         <input type="hidden" name="latitude" />
-        <input type="submit" name="submit" value="Broadcast" />
       </form>
 
               <div id="map-canvas" style="width:100%; height: 400px;">      
