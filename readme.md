@@ -3,6 +3,16 @@ Kryptonite
 
 **Alex**: {{contextual alert safety paragraph}}
 
+**Sam (demo)**:
+We thought we could do better, so we created Kryptonite,
+a violent crime alert and witness reporting system. To a civilian,
+Kryptonite is a context-sensitive alert app that
+she can install to on her phone. Kryptonite uses GPS to
+see where the civilian is. If a violent crime happens nearby,
+the civilian receives an alert from the police in real time.
+Civilians install the app so they can stay safe.
+But that's not all.
+
 **Tom**: There was another interesting thing about the Boston shooting incident.
 Through major advances in technology (blah blah),
 we now live in a world where ordinary people are
@@ -25,16 +35,6 @@ http://www.fbi.gov/boston/press-releases/2013/fbi-assists-boston-police-departme
 http://www.bloomberg.com/news/2013-04-19/boston-s-surreal-crowdsourced-manhunt.html
 http://petapixel.com/2013/04/17/boston-marathon-bombing-investigators-using-crowdsourced-photographs/
 http://news.cnet.com/8301-13578_3-57579707-38/crowdsourced-videos-photos-could-aid-boston-blast-investigations/
-
-**Sam (demo)**:
-We thought we could do better, so we created Kryptonite,
-a violent crime alert and witness reporting system. To a civilian,
-Kryptonite is a context-sensitive alert app that
-she can install to on her phone. Kryptonite uses GPS to
-see where the civilian is. If a violent crime happens nearby,
-the civilian receives an alert from the police in real time.
-Civilians install the app so they can stay safe.
-But that's not all.
 
 **Sam (demo)**:
 After the situation has cooled down, law enforcement can
