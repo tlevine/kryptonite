@@ -2,9 +2,11 @@
   Parse.initialize("1znInkUwxEU1tSd7Ee7SX9WL9c3whQXh4esOLREB", "eNGcDrnLPePX7kQcjd3L5HsHWdQXX9HzHskP18nG");
   var Incident = Parse.Object.extend('Incident')
   var Location = Parse.Object.extend('Location')
+  var incident_marker = null
 
   // Make the map
   var map, data
+
   var initializeMap = function() {
     var mapOptions = {
       zoom: 14,
@@ -14,8 +16,7 @@
 
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
-    var incident_marker = null
-    
+   
     google.maps.event.addListener(map, 'click', function( mouse_event /* google.maps.MouseEvent */ ) {
       if ( incident_marker ) {
         incident_marker.setMap(null)
@@ -36,11 +37,50 @@
       search()
     });
   }
+
   var hits = new Array()
   var last_query = null
 
+ var sort_and_filter = function ( locations ) {
+	window.locations = locations
+	if ( ! incident_marker ) {
+		return
+	}
+
+	var current_marker_point_parse = new Parse.GeoPoint(incident_marker.getPosition().lat(), incident_marker.getPosition().lng());
+
+
+	var unique = new Object();
+	locations.forEach ( function(location) {
+		    var installation_id = location.get('installation_id')
+			var new_point_distance = current_marker_point_parse.milesTo(location.get('location'))
+			var nearest_point = unique[installation_id]
+			var take_new_point = true
+			if ( nearest_point && nearest_point.distance_from_current_marker <= new_point_distance ) {
+				take_new_point = false
+			}
+
+			if ( take_new_point ) {
+				location.distance_from_current_marker = new_point_distance
+				unique[installation_id] = location
+			}
+		} )
+	for ( var i in unique ) {
+		var location = unique[i]
+		var GooglePoint = new google.maps.LatLng ( location.get('location').latitude , location.get('location').longitude )
+		var hit = new google.maps.Marker({
+					        position: GooglePoint,
+					        map: map,
+					        icon : "http://maps.google.com/mapfiles/kml/shapes/schools_maps.png", 
+					        title: 'Possible witness'
+					      });
+         hits.push(hit)
+	}
+  }
+
   // Search
   var search = function() {
+
     // Get form data.
     var data = Parse._.reduce($('#search').serializeArray(), function(input, output) {
       input[output.name] = output.value
@@ -94,19 +134,7 @@
       .lessThanOrEqualTo('createdAt', endDate)
       .greaterThanOrEqualTo('createdAt', startDate)
       .select('udid', 'location')
-      .find().then(function(locations){
-        window.locations = locations
-		hits = locations.map(function(location){
-		  var latLng = new google.maps.LatLng ( location.get('location').latitude , location.get('location').longitude )
-          var hit = new google.maps.Marker({
-		        position: latLng,
-		        map: map,
-		        icon : "http://maps.google.com/mapfiles/kml/shapes/schools_maps.png", 
-		        title: 'Possible witness'
-		      });
-		})
-		
-       })
+      .find().then( sort_and_filter)
   
     // Remove stuff
     delete data.radius
