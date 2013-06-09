@@ -75,7 +75,9 @@
     endDate.setTime(data.date.getTime())
     startDate.setHours(startDate.getHours() - 6)
     endDate.setHours(endDate.getHours() + 6)
-  	hits.forEach ( function ( hit ) { hit.setMap ( null )})
+    if (hits) {
+      hits.forEach ( function ( hit ) { hit.setMap ( null )})
+    }
     // Run the query.
     last_query
       .withinMiles('location', data.location, 1 * data.radius)
@@ -101,6 +103,9 @@
   
     // For debugging
     window.data = data
+
+    // Enable the send button
+    $('input[type=submit]').removeAttr('disabled')
   }
 
   var send = function (e) {
