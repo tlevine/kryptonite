@@ -42,9 +42,14 @@
     data.date = new Date(data.date)
     data.date.setHours(data.date.getHours() + (1 * data.hour))
     delete data.hour
+
+    // Make the location a GeoPoint
+    data.location = new Parse.GeoPoint(1*data.latitude,1*data.longitude)
+    delete data.longitude
+    delete data.latitude
+    window.data = data
   
     // Look up nearby readings in location
-    var incidentLocation = new Parse.GeoPoint($("input[name=latitude]").val(), $("input[name=longitude]").val())
     var query = new Parse.Query(Location)
   
     // and in time
@@ -57,7 +62,7 @@
   
     // Run the query.
     query
-      .near('location', incidentLocation)
+      .near('location', data.location)
       .lessThanOrEqualTo('date', endDate)
       .greaterThanOrEqualTo('date', startDate)
       .select('udid')
