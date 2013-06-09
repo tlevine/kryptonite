@@ -10,7 +10,7 @@
       <h3>Broadcast an incident</h3>
     </header>
     <div id="main">
-      <form id="broadcast">
+      <form id="search">
         <div class="row">
           <label for="incidentNumber">Incident Number</label>
           <input type="text" name="incidentNumber" placeholder="31337" />
@@ -56,16 +56,12 @@
               <option value="22">10:00 pm</option>
               <option value="23">11:00 pm</option>
           </select>
-          <input type="submit" name="submit" value="Broadcast" />
+          <input type="submit" name="submit" value="Send" />
         </div>
         <input type="hidden" name="longitude" />
         <input type="hidden" name="latitude" />
       </form>
-        <form id="send">
-          <input type="submit" name="submit" value="Send" />
-          </form>
-              <div id="map-canvas" style="width:100%; height: 400px;">      
-      </div>
+      <div id="map-canvas" style="width:100%; height: 400px;"></div>
     </div>
 
     <footer>

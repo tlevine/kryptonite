@@ -27,16 +27,16 @@
       
       $("input[name=latitude]").val(mouse_event.latLng.lat())
       $("input[name=longitude]").val(mouse_event.latLng.lng())
-
+      search()
     });
   }
   var hits = new Array()
   var last_query = null
-  // On clicking the "submit" button
-  var broadcast = function(e) {
-    e.preventDefault()
+
+  // Search
+  var search = function() {
     // Get form data.
-    var data = Parse._.reduce($('#broadcast').serializeArray(), function(input, output) {
+    var data = Parse._.reduce($('#search').serializeArray(), function(input, output) {
       input[output.name] = output.value
       return input
     }, {})
@@ -45,16 +45,13 @@
     for (field in {"description":null,"phoneNumber":null,"incidentNumber":null}) {
       if (!data[field]) {
         alert('You need to provide a ' + field + '.')
-        return false
       }
     }
     if (!data.longitude) {
       alert('Click on the map to select a location.')
-      return false
     }
     if (data.hour === '') {
       alert('What hour of the day?')
-      return false
     }
   
     // Make the date a date.
@@ -105,12 +102,11 @@
   
     // For debugging
     window.data = data
-  
-    return false
   }
 
   var send = function (e) {
-	var data = Parse._.reduce($('#broadcast').serializeArray(), function(input, output) {
+    e.preventDefault()
+	var data = Parse._.reduce($('#search').serializeArray(), function(input, output) {
       input[output.name] = output.value
       return input
     }, {})
@@ -134,8 +130,7 @@
     $('input[type=date]').attr('value', (d.getFullYear() + '-0' + (d.getMonth() + 1) + '-0' + d.getDate()).replace('00','0'))
 
     // Handle the click.
-    $('#broadcast').submit(broadcast)
-	$('#send').submit(send)
+	$('#search').submit(send)
 
   }
 })()
