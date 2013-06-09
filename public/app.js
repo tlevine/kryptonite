@@ -78,11 +78,8 @@
          hits.push(hit)
 	}
   }
-
-  // Search
-  var search = function() {
-
-    // Get form data.
+  var load_data = function() {
+	// Get form data.
     var data = Parse._.reduce($('#search').serializeArray(), function(input, output) {
       input[output.name] = output.value
       return input
@@ -100,7 +97,7 @@
     if (data.hour === '') {
       alert('What hour of the day?')
     }
-  
+	
     // Make the date a date.
     console.log(data.date)
     data.date = new Date(data.date)
@@ -108,21 +105,27 @@
     console.log(data.date)
     data.date.setHours(data.date.getHours() + (1 * data.hour))
     console.log(data.date)
-    delete data.hour
 
     // Make the location a GeoPoint
     data.location = new Parse.GeoPoint(1*data.latitude,1*data.longitude)
-    delete data.longitude
+    
+    delete data.hour
     delete data.latitude
-  
+    delete data.longitude
+    window.data = data
+  }
+  // Search
+  var search = function() {
+    load_data ()
+
     // Look up nearby readings in location
     last_query = new Parse.Query(Location)
   
     // and in time
     var startDate = new Date()
     var endDate = new Date()
-    startDate.setTime(data.date.getTime())
-    endDate.setTime(data.date.getTime())
+    startDate.setTime(window.data.date.getTime())
+    endDate.setTime(window.data.date.getTime())
     startDate.setHours(startDate.getHours() - 6)
     endDate.setHours(endDate.getHours() + 6)
     hits.forEach ( function ( hit ) {
@@ -135,24 +138,21 @@
 	hits = new Array()
     // Run the query.
     last_query
-      .withinMiles('location', data.location, 1 * data.radius)
+      .withinMiles('location', window.data.location, 1 * window.data.radius)
       .lessThanOrEqualTo('createdAt', endDate)
       .greaterThanOrEqualTo('createdAt', startDate)
       .select('installation_id', 'location')
       .find().then( sort_and_filter)
-  
-    // Remove stuff
-    delete data.radius
-
     // Expose
-    window.data = data
-
+	
     // Enable the send button
     $('input[type=submit]').removeAttr('disabled')
   }
 
   var send = function (e) {
     e.preventDefault()
+	
+	load_data ()
 	
 	var send_to_installation_ids = hits.map ( function ( hit ) {
 		return hit.installation_id
@@ -161,9 +161,9 @@
 		console.log ( "No targets for push notifications")
 		return;
 	}
-	window.data.installationIds = send_to_installation_ids
+	window.data.installation_ids = send_to_installation_ids
 	// Save it to parse
-    var incident = new Incident
+    var incident = new Incident	
     incident.save(window.data)
 	
 	//var alert_message = window.data.description + "\nCall : " + window.data.phoneNumber + "\nID : " + window.data.incidentNumber
