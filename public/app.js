@@ -8,7 +8,7 @@
   var initializeMap = function() {
     var mapOptions = {
       zoom: 20,
-      center: new google.maps.LatLng(37.750254,-122.406951),
+      center: new google.maps.LatLng(37.783672,-122.395817),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -27,10 +27,11 @@
       
       $("input[name=latitude]").val(mouse_event.latLng.lat())
       $("input[name=longitude]").val(mouse_event.latLng.lng())
-      
+
     });
   }
   var hits = new Array()
+  var last_query = null
   // On clicking the "submit" button
   var broadcast = function(e) {
     e.preventDefault()
@@ -66,7 +67,7 @@
     window.data = data
   
     // Look up nearby readings in location
-    var query = new Parse.Query(Location)
+    last_query = new Parse.Query(Location)
   
     // and in time
     var startDate = new Date()
@@ -77,10 +78,10 @@
     endDate.setHours(endDate.getHours() + 6)
   	hits.forEach ( function ( hit ) { hit.setMap ( null )})
     // Run the query.
-    query
-//      .near('location', data.location)
-//      .lessThanOrEqualTo('date', endDate)
-//      .greaterThanOrEqualTo('date', startDate)
+    last_query
+      .near('location', data.location)
+      .lessThanOrEqualTo('createdAt', endDate)
+      .greaterThanOrEqualTo('createdAt', startDate)
       .select('udid', 'location')
       .find().then(function(locations){
         window.locations = locations
@@ -106,6 +107,22 @@
     return false
   }
 
+  var send = function (e) {
+	var data = Parse._.reduce($('#broadcast').serializeArray(), function(input, output) {
+      input[output.name] = output.value
+      return input
+    }, {})
+
+	var alert_message = data.description
+	console.log("Sending " + alert_message);
+	Parse.Push.send( {
+		where: last_query,
+		data : {
+			alert : alert_message
+		}
+	});
+	return false;
+	}
 
   // Main function
   google.maps.event.addDomListener(window, 'load', initializeMap)
@@ -116,5 +133,7 @@
 
     // Handle the click.
     $('#broadcast').submit(broadcast)
+	$('#send').submit(send)
+
   }
 })()
