@@ -11,10 +11,12 @@ body {
     color: #999;
  /* text-shadow: 0px 2px 0px #333; */
     font-family: 'Quantico', sans-serif;
+    font-weight: 400;
 }
 h1 {
     color: black;
-    background-color: yellow
+    background-color: yellow;
+    font-weight: 700;
 }
 .row { display: block; margin-top: 0.5em; }
 input[name=description] { width: 100%; margin: 0; }
