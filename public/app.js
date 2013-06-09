@@ -18,11 +18,11 @@
         mapOptions);
    
     google.maps.event.addListener(map, 'click', function( mouse_event /* google.maps.MouseEvent */ ) {
-      if ( incident_marker ) {
-	incident_marker.position = mouse_event.latLng
-	incident_marker.circle.center = mouse_event.latLng
+    if ( incident_marker ) {
+	  incident_marker.setPosition ( mouse_event.latLng )
+	  incident_marker.circle.setCenter ( mouse_event.latLng )
         //incident_marker.setMap(null)
-      } else {
+    } else {
       incident_marker = new google.maps.Marker({
         position: mouse_event.latLng,
         map: map
@@ -36,12 +36,13 @@
 	      strokeWeight: 2,
 	      fillColor: '#FF0000',
 	      fillOpacity: 0.35,
+	editable: true,
+	clickable : false,
         map: map,
         center: incident_marker.position,
         radius: radius_in_miles * 1609.34, //* $('input[name=radius]').val(),  radius in miles * 1609.34 )
         fillColor: '#000000'
       });
-
 	}
 
 
@@ -53,6 +54,14 @@
       search()
     });
   }
+
+var update_displayed_radius = function () {
+	var radius_in_miles = $('input[name=radius]').val()
+	if ( incident_marker && incident_marker.circle ) {
+		incident_marker.circle.setRadius ( radius_in_miles * 1609.34 )
+	}
+	search()
+}
 
   var hits = new Array()
   var last_query = null
@@ -227,5 +236,6 @@
                                     $('.requestrow').attr("style", "display:block");
                                     }
                                     });
- 
+  
+ $('input[name=radius]').change(update_displayed_radius)
 })()
