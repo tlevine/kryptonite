@@ -4,6 +4,7 @@
   var Location = Parse.Object.extend('Location')
 
   // Make the map
+  var map = null
   var initializeMap = function() {
     var mapOptions = {
       zoom: 20,
@@ -11,7 +12,7 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
+    map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
     var incident_marker = null
     
@@ -29,7 +30,7 @@
       
     });
   }
-
+  var hits = new Array()
   // On clicking the "submit" button
   var broadcast = function(e) {
     e.preventDefault()
@@ -74,15 +75,25 @@
     endDate.setTime(data.date.getTime())
     startDate.setHours(startDate.getHours() - 6)
     endDate.setHours(endDate.getHours() + 6)
-  
+  	hits.forEach ( function ( hit ) { hit.setMap ( null )})
     // Run the query.
     query
-      .near('location', data.location)
-      .lessThanOrEqualTo('date', endDate)
-      .greaterThanOrEqualTo('date', startDate)
-      .select('udid')
+//      .near('location', data.location)
+//      .lessThanOrEqualTo('date', endDate)
+//      .greaterThanOrEqualTo('date', startDate)
+      .select('udid', 'location')
       .find().then(function(locations){
-        console.log(locations)
+        window.locations = locations
+		hits = locations.map(function(location){
+		  var latLng = new google.maps.LatLng ( location.get('location').latitude , location.get('location').longitude )
+          var hit = new google.maps.Marker({
+		        position: latLng,
+		        map: map,
+		        icon : "http://maps.google.com/mapfiles/kml/shapes/schools_maps.png", 
+		        title: 'Possible witness'
+		      });
+		})
+		
        })
   
     // Save it to parse
