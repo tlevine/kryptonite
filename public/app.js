@@ -126,7 +126,8 @@
   window.onload = function() { 
     // Set defaults.
     var d = new Date()
-    $('input[type=date]').attr('value', (d.getFullYear() + '-0' + (d.getMonth() + 1) + '-0' + d.getDate()).replace('00','0'))
+    $('input[name=date]').attr('value', (d.getFullYear() + '-0' + (d.getMonth() + 1) + '-0' + d.getDate()).replace('00','0'))
+    $('select[name=hour]').val(d.getHours())
 
     // Handle the click.
 	$('#search').submit(send)
