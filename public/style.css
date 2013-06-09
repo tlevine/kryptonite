@@ -26,6 +26,7 @@ h1 {
     background-image: -webkit-linear-gradient(bottom left, #014B00 0%, #999 150%);
 }
 .row { display: block; margin-bottom: 0.5em; }
+.requestrow { display: block; margin-bottom: 0.5em; }
 select, input { border: 0; padding: 0; margin-top: 0; margin-bottom: 0; }
 input[name=description] { width: 100%; }
 input[name=date] { width: 150px; margin-left: 0; margin-right: 15px; }

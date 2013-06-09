@@ -206,4 +206,15 @@
 
   $('label[for=radius] .radius').text($('input[name=radius]').val())
   $('input[name=radius]').change(function() { $('label[for=radius] .radius').text($(this).val())})
+ 
+ 
+ $('input[name=alertCheck]').change(function() {
+                                    //Immediate Alert - hide fields
+                                    if ($('input[name=alertCheck]').is(':checked')){
+                                    $('.requestrow').attr("style", "display:none");
+                                    } else { //Information Request - show fields
+                                    $('.requestrow').attr("style", "display:block");
+                                    }
+                                    });
+ 
 })()
