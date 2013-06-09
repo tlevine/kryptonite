@@ -24,12 +24,17 @@ http://www.bloomberg.com/news/2013-04-19/boston-s-surreal-crowdsourced-manhunt.h
 http://petapixel.com/2013/04/17/boston-marathon-bombing-investigators-using-crowdsourced-photographs/
 http://news.cnet.com/8301-13578_3-57579707-38/crowdsourced-videos-photos-could-aid-boston-blast-investigations/
 
+Now a different story.
 
-
-Two weeks ago, my friend's laptop got stolen out
-of his office. He was quite upset, to say the least,
+People don't want crime to happen to them, but they
+aren't particularly empowered to help law-enforcement
+stop crime. Two weeks ago, my friend's laptop got
+stolen. He was quite upset, to say the least,
 but he refused to report the theft; he thought that
 reporting the theft would be a waste of time.
+Unfortunately, this is the the norm; most crime does
+get reported. Reporting crime does have an impact,
+but this fact is not made clear to the public.
 
 
 
