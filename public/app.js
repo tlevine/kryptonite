@@ -130,6 +130,8 @@
 
     // Handle the click.
 	$('#search').submit(send)
-
   }
+
+  $('label[for=radius] .radius').text($('input[name=radius]').val())
+  $('input[name=radius]').change(function() { $('label[for=radius] .radius').text($(this).val())})
 })()
