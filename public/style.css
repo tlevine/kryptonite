@@ -9,6 +9,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     color: #999;
+ /* text-shadow: 0px 2px 0px #333; */
+    font-family: 'Quantico', sans-serif;
 }
 h1 {
     color: black;
