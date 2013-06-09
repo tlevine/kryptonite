@@ -23,6 +23,7 @@ h1 {
     font-weight: 700;
     font-size: 4em;
     margin: 0;
+    background-image: -webkit-linear-gradient(bottom left, #014B00 0%, #999 150%);
 }
 .row { display: block; margin-bottom: 0.5em; }
 select, input { border: 0; padding: 0; margin-top: 0; margin-bottom: 0; }
