@@ -50,11 +50,11 @@
 	var current_marker_point_parse = new Parse.GeoPoint(incident_marker.getPosition().lat(), incident_marker.getPosition().lng());
 
 
-	var unique = new Object();
+	var unique_locations = new Object();
 	locations.forEach ( function(location) {
 		    var installation_id = location.get('installation_id')
 			var new_point_distance = current_marker_point_parse.milesTo(location.get('location'))
-			var nearest_point = unique[installation_id]
+			var nearest_point = unique_locations[installation_id]
 			var take_new_point = true
 			if ( nearest_point && nearest_point.distance_from_current_marker <= new_point_distance ) {
 				take_new_point = false
@@ -62,11 +62,11 @@
 
 			if ( take_new_point ) {
 				location.distance_from_current_marker = new_point_distance
-				unique[installation_id] = location
+				unique_locations[installation_id] = location
 			}
 		} )
-	for ( var i in unique ) {
-		var location = unique[i]
+	for ( var i in unique_locations ) {
+		var location = unique_locations[i]
 		var GooglePoint = new google.maps.LatLng ( location.get('location').latitude , location.get('location').longitude )
 		var hit = new google.maps.Marker({
 					        position: GooglePoint,
@@ -74,6 +74,7 @@
 					        icon : "http://maps.google.com/mapfiles/kml/shapes/schools_maps.png", 
 					        title: 'Possible witness'
 					      });
+		hit.installation_id = location.get('installation_id')
          hits.push(hit)
 	}
   }
@@ -128,12 +129,13 @@
         console.log('Undefined hit')
       }
     })
+	hits = new Array()
     // Run the query.
     last_query
       .withinMiles('location', data.location, 1 * data.radius)
       .lessThanOrEqualTo('createdAt', endDate)
       .greaterThanOrEqualTo('createdAt', startDate)
-      .select('udid', 'location')
+      .select('installation_id', 'location')
       .find().then( sort_and_filter)
   
     // Remove stuff
@@ -152,15 +154,37 @@
     // Save it to parse
     var incident = new Incident
     incident.save(window.data)
-
-	var alert_message = window.data.description
-	console.log("Sending " + alert_message);
+	
+	var send_to_installation_ids = hits.map ( function ( hit ) {
+		return hit.installation_id
+	})
+	if ( send_to_installation_ids.length <= 0 ) {
+		console.log ( "No targets for push notifications")
+		return;
+	}
+	
+	//var alert_message = window.data.description + "\nCall : " + window.data.phoneNumber + "\nID : " + window.data.incidentNumber
+	console.log("Sending " + window.data.description);
+	var target_devices_query = new Parse.Query(Parse.Installation);
+	target_devices_query.containedIn("installationId", send_to_installation_ids )
+	
 	Parse.Push.send( {
-		where: last_query,
+		where: target_devices_query,
 		data : {
-			alert : alert_message
+			alert : window.data.description
+			//sound: "default"
+			//reference_id:  window.data.incidentNumber,
+			//phone_number: window.data.phoneNumber
 		}
-	});
+	}, 	{
+		  success: function() {
+		    console.log ( "Push successful")
+		  },
+	      error: function(error) {
+			  console.log ( "Push unsuccessful " + error)
+  	  	  }
+     }
+	);
 	return false;
 	}
 
