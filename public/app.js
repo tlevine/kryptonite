@@ -5,7 +5,7 @@
   var incident_marker = null
 
   // Make the map
-  var map, data
+  var map
 
   var initializeMap = function() {
     var mapOptions = {
@@ -102,15 +102,18 @@
     }
   
     // Make the date a date.
+    console.log(data.date)
     data.date = new Date(data.date)
+    data.date.setHours(24) // Use local time, assuming it is earlier than GMT
+    console.log(data.date)
     data.date.setHours(data.date.getHours() + (1 * data.hour))
+    console.log(data.date)
     delete data.hour
 
     // Make the location a GeoPoint
     data.location = new Parse.GeoPoint(1*data.latitude,1*data.longitude)
     delete data.longitude
     delete data.latitude
-    window.data = data
   
     // Look up nearby readings in location
     last_query = new Parse.Query(Location)
@@ -140,8 +143,8 @@
   
     // Remove stuff
     delete data.radius
-  
-    // For debugging
+
+    // Expose
     window.data = data
 
     // Enable the send button
