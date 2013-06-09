@@ -4,7 +4,7 @@
   var Location = Parse.Object.extend('Location')
 
   // Make the map
-  var map = null
+  var map, data
   var initializeMap = function() {
     var mapOptions = {
       zoom: 20,
@@ -78,7 +78,7 @@
   	hits.forEach ( function ( hit ) { hit.setMap ( null )})
     // Run the query.
     last_query
-      .near('location', data.location)
+      .withinMiles('location', data.location, 1 * data.radius)
       .lessThanOrEqualTo('createdAt', endDate)
       .greaterThanOrEqualTo('createdAt', startDate)
       .select('udid', 'location')
@@ -96,9 +96,8 @@
 		
        })
   
-    // Save it to parse
-    var incident = new Incident
-    incident.save(data)
+    // Remove stuff
+    delete data.radius
   
     // For debugging
     window.data = data
@@ -106,10 +105,10 @@
 
   var send = function (e) {
     e.preventDefault()
-	var data = Parse._.reduce($('#search').serializeArray(), function(input, output) {
-      input[output.name] = output.value
-      return input
-    }, {})
+
+    // Save it to parse
+    var incident = new Incident
+    incident.save(data)
 
 	var alert_message = data.description
 	console.log("Sending " + alert_message);
