@@ -7,7 +7,7 @@
   var map, data
   var initializeMap = function() {
     var mapOptions = {
-      zoom: 20,
+      zoom: 14,
       center: new google.maps.LatLng(37.783672,-122.395817),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -20,10 +20,16 @@
       if ( incident_marker ) {
         incident_marker.setMap(null)
       }
-       incident_marker = new google.maps.Marker({
+      incident_marker = new google.maps.Marker({
         position: mouse_event.latLng,
-        map: map,
+        map: map
       });
+      var circle = new google.maps.Circle({
+        map: map,
+        radius: 0.000621371 * $('input[name=radius]').val(),
+        fillColor: '#000000'
+      });
+      circle.bindTo('center', incident_marker, 'position')
       
       $("input[name=latitude]").val(mouse_event.latLng.lat())
       $("input[name=longitude]").val(mouse_event.latLng.lng())
@@ -75,9 +81,13 @@
     endDate.setTime(data.date.getTime())
     startDate.setHours(startDate.getHours() - 6)
     endDate.setHours(endDate.getHours() + 6)
-    if (hits) {
-      hits.forEach ( function ( hit ) { hit.setMap ( null )})
-    }
+    hits.forEach ( function ( hit ) {
+      if (hit) {
+        hit.setMap ( null )
+      } else {
+        console.log('Undefined hit')
+      }
+    })
     // Run the query.
     last_query
       .withinMiles('location', data.location, 1 * data.radius)
