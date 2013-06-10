@@ -26,6 +26,8 @@ marathon investigation.
 http://www.wired.com/dangerroom/2013/04/boston-crowdsourced/
 http://www.computerworld.com/s/article/9238446/Boston_bombings_Forensics_on_crowdsourced_video_will_be_a_challenge
 
+Law enforcement uses Kryptonite to crowdsource evidence.
+
 **Tom**:
 While they recognize the value of crowdsourced data,
 the investigators did not have a good tool for
